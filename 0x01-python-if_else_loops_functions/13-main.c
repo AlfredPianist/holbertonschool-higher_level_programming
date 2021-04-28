@@ -10,7 +10,7 @@
  */
 int main(void)
 {
-	listint_t *head;
+	listint_t *head, *head2;
 
 	head = NULL;
 	add_nodeint_end(&head, 1);
@@ -40,7 +40,13 @@ int main(void)
 	print_listint(head);
 	printf("-----------------\n");
 
+	head2 = NULL;
+	insert_node(&head2, 10);
+	print_listint(head2);
+	printf("-----------------\n");
+
 	free_listint(head);
+	free_listint(head2);
 
 	return (0);
 }
