@@ -14,16 +14,17 @@ listint_t *insert_node(listint_t **head, int number)
 	new_node->n = number;
 
 	/* Case 1: if new node's number is less than list's head. */
-	if (current_node->n > number)
+	if (current_node->n >= number)
 	{
 		new_node->next = current_node;
+		*head = new_node;
 		return (new_node);
 	}
 
 	/* Case 2: if new node's number is less than the next node's one. */
-	while (current_node != NULL)
+	while (current_node->next != NULL)
 	{
-		if (current_node->next->n > number)
+		if (current_node->next->n >= number)
 		{
 			new_node->next = current_node->next;
 			current_node->next = new_node;
