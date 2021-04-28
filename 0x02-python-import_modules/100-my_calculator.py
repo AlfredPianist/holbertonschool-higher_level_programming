@@ -5,10 +5,10 @@ if __name__ == "__main__":
 
     arglen = len(argv) - 1
     ops = {
-        '+' : add,
-        '-' : sub,
-        '*' : mul,
-        '/' : div
+        '+': add,
+        '-': sub,
+        '*': mul,
+        '/': div
     }
 
     if not arglen == 3:
