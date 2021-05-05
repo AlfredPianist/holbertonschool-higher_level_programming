@@ -31,7 +31,6 @@ listint_t *add_nodeint(listint_t **head, const int n)
 int is_palindrome(listint_t **head)
 {
 	listint_t *current, *rev_head, *rev_curr;
-	size_t len;
 
 	if (!head)
 		return (1);
