@@ -1,23 +1,6 @@
 #include "lists.h"
 
 /**
- * list_size - Returns the size of a singly-linked list.
- * @head: The head of the list.
- *
- * Return: The size of the list.
- */
-size_t list_size(listint_t *head)
-{
-	listint_t *current;
-	size_t len = 0;
-
-	for (current = head; current; len++, current = current->next)
-		;
-
-	return (len);
-}
-
-/**
  * add_nodeint - Adds a node at the beginning of the list.
  * @head: The head of the list.
  * @n: The content of the node.
@@ -51,11 +34,6 @@ int is_palindrome(listint_t **head)
 	size_t len;
 
 	if (!head)
-		return (1);
-
-	len = list_size(*head);
-
-	if (len == 1)
 		return (1);
 
 	rev_head = NULL;
