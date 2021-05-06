@@ -62,14 +62,18 @@ int is_palindrome(listint_t **head)
 	if (len % 2 != 0)
 		current = current->next;
 
-	for (rev_curr = rev_head; current;
-	     current = current->next, rev_curr = rev_curr->next)
+	for (rev_curr = rev_head; current; current = current->next)
+	{
 		if (current->n != rev_curr->n)
 		{
 			free_listint(rev_head);
 			rev_head = NULL;
 			return (0);
 		}
+		rev_head = rev_curr->next;
+		free(rev_curr);
+		rev_curr = rev_head;
+	}
 
 	free_listint(rev_head);
 	return (1);
