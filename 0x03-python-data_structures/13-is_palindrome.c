@@ -18,25 +18,23 @@ size_t list_size(listint_t *head)
 }
 
 /**
- * add_nodeint - Adds a node at the beginning of the list.
+ * rev_listint - Reverses  a singly-linked list.
  * @head: The head of the list.
- * @n: The content of the node.
- *
- * Return: The new node of the list.
  */
-listint_t *add_nodeint(listint_t **head, const int n)
+void rev_listint(listint_t **head)
 {
-	listint_t *new_node;
+	listint_t *current, *next, *previous;
 
-	new_node = malloc(sizeof(*new_node));
-	if (!new_node)
-		return (NULL);
-
-	new_node->n = n;
-	new_node->next = *head;
-	*head = new_node;
-
-	return (new_node);
+	current = *head;
+	next = previous = NULL;
+	while (current)
+	{
+		previous = current->next;
+		current->next = next;
+		next = current;
+		current = previous;
+	}
+	*head = next;
 }
 
 /**
@@ -56,25 +54,22 @@ int is_palindrome(listint_t **head)
 	len = list_size(*head), half = len / 2;
 
 	rev_head = NULL;
-	for (i = 0, current = *head; i < half; i++, current = current->next)
-		add_nodeint(&rev_head, current->n);
+	for (i = 0, current = *head; i < half - 1; i++, current = current->next)
+		;
 
 	if (len % 2 != 0)
 		current = current->next;
+	rev_head = current;
+	rev_listint(&rev_head);
 
-	for (rev_curr = rev_head; current; current = current->next)
-	{
+	for (rev_curr = rev_head, current = *head; current;
+	     current = current->next, rev_curr = rev_curr->next)
 		if (current->n != rev_curr->n)
 		{
-			free_listint(rev_head);
-			rev_head = NULL;
+			rev_listint(&rev_head);
 			return (0);
 		}
-		rev_head = rev_curr->next;
-		free(rev_curr);
-		rev_curr = rev_head;
-	}
 
-	free_listint(rev_head);
+	rev_listint(&rev_head);
 	return (1);
 }
