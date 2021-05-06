@@ -48,9 +48,9 @@ int is_palindrome(listint_t **head)
 	listint_t *current, *rev_head, *rev_curr;
 	size_t len, i, half;
 
-	if (!head)
+	if (!head || !(*head)->next)
 		return (1);
-
+	
 	len = list_size(*head), half = len / 2;
 
 	rev_head = NULL;
