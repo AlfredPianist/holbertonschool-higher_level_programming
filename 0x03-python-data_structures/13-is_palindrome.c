@@ -55,14 +55,11 @@ int is_palindrome(listint_t **head)
 
 	len = list_size(*head), half = len / 2;
 
-	if (len == 1)
-		return (1);
-
 	rev_head = NULL;
 	for (i = 0, current = *head; i < half; i++, current = current->next)
 		add_nodeint(&rev_head, current->n);
 
-	if (half % 2 == 0)
+	if (len % 2 != 0)
 		current = current->next;
 
 	for (rev_curr = rev_head; current;
