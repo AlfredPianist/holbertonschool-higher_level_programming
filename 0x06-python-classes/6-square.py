@@ -75,10 +75,10 @@ class Square:
         If self.__size is 0, then it only prints a new line.
         """
         if self.__size != 0:
-            if self.__position[1] > 0:
-                print("" * self.__position[1])
-            for i in range(self.__size):
-                print(" " * self.__position[0], end="")
-                print("#" * self.__size)
+            for row in range(self.__position[1]):
+                print("")
+            for col in range(self.__size):
+                print("{}{}".format(" " * self.__position[0],
+                                    "#" * self.__size))
         else:
             print("")
