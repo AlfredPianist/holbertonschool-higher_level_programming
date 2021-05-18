@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 """6-square
-A Square class with size as its only private attribute (and its
+A Square class with size and position as  attributes (and its
 getter and setter methods), and area and my_print (prints square with '#'
 charater) as methods.
 """
