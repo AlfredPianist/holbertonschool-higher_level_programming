@@ -15,14 +15,15 @@ class TestMaxInteger(unittest.TestCase):
         self.assertEqual(max_integer([-1, -20, -2, -50]), -1)
         self.assertEqual(max_integer("1 2 3 4 5"), '5')
         self.assertEqual(max_integer((40, 0, 2, 5)), 40)
+        self.assertEqual(max_integer((10, 0,- 2, 5)), 10)
+        self.assertEqual(max_integer([40]), 40)
+        self.assertEqual(max_integer([]), None)
 
     def test_types(self):
         self.assertRaises(TypeError, max_integer, None)
         self.assertRaises(TypeError, max_integer, 1234)
 
     def test_style(self):
-        self.assertEqual(os.system('pep8 5-text_indentation.py'), 0)
-
         fd = os.popen('head -1 5-text_indentation.py')
         self.assertEqual(fd.read(), '#!/usr/bin/python3\n')
         fd.close()
