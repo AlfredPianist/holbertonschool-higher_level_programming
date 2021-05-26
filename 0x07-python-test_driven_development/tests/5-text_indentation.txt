@@ -94,6 +94,9 @@ Strings
     Ms.
     <BLANKLINE>
 
+    >>> text_indentation("Holberton School")
+    Holberton School
+
     >>> text_indentation("Hola        como  \n  estas ?  \r MUY bien")
     Hola        como
     estas ?

@@ -33,13 +33,15 @@ def text_indentation(text):
                 end_slice = i
                 end_slice_found = False
             if (i == len(text) - 1):
-                print(text[begin_slice:end_slice + 1])
+                print(text[begin_slice:end_slice + 1], end="")
                 last_line = True
             if (c in ".:?\n\r") and last_line is False:
                 if (text[end_slice] in " \t\n\r"):
-                    print(text[begin_slice:end_slice])
+                    print(text[begin_slice:end_slice], end="")
                 else:
-                    print(text[begin_slice:end_slice + 1])
+                    print(text[begin_slice:end_slice + 1], end="")
                 begin_slice_found, end_slice_found = False, False
             if (c in ".:?"):
+                print("\n")
+            if (c in "\n\r"):
                 print("")
