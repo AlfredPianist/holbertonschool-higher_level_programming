@@ -1,0 +1,136 @@
+Test ``0-add_integer.txt`` for the ``0-add_integer`` module
+
+=========================
+ Using ``0-add_integer``
+=========================
+
+This file tests the function ``add_integer``.
+
+Import
+======
+
+>>> add_integer = __import__('0-add_integer').add_integer
+
+Numbers
+=======
+
+``add_integer()`` returns the sum of its arguments. It is only defined
+for integers.
+
+::
+
+    >>> add_integer(1, 10)
+    11
+
+    >>> add_integer(0, 20)
+    20
+
+    >>> add_integer(-2, 20)
+    18
+
+If floating-point values are passed as arguments, they'll be casted as
+integers.
+
+::
+
+    >>> add_integer(2.0, 3)
+    5
+
+    >>> add_integer(1.9, 50.9)
+    51
+
+Any numeric values else than integers and floats, an exception will be raised.
+
+::
+
+    >>> add_integer(2j, 1)
+    Traceback (most recent call last):
+        ...
+    TypeError: a must be an integer
+
+    >>> add_integer(40, float('inf'))
+    Traceback (most recent call last):
+        ...
+    OverflowError: cannot convert float infinity to integer
+
+Non-Numbers
+===========
+
+The ``add_integer`` function is not defined for non-numbers.
+
+::
+
+    >>> add_integer(150, "School")
+    Traceback (most recent call last):
+        ...
+    TypeError: b must be an integer
+
+    >>> add_integer(150, ())
+    Traceback (most recent call last):
+        ...
+    TypeError: b must be an integer
+
+    >>> add_integer(None)
+    Traceback (most recent call last):
+        ...
+    TypeError: a must be an integer
+
+    >>> add_integer(float('nan'))
+    Traceback (most recent call last):
+        ...
+    ValueError: cannot convert float NaN to integer
+
+
+Misc
+====
+
+Checking number of arguments.
+
+::
+
+    >>> add_integer()
+    Traceback (most recent call last):
+        ...
+    TypeError: add_integer() missing 1 required positional argument: 'a'
+
+Documentation and style
+=======================
+
+Checking if documentation exists.
+
+::
+
+    >>> len(__import__("0-add_integer").__doc__) > 8
+    True
+
+    >>> len(__import__("0-add_integer").add_integer.__doc__) > 8
+    True
+
+Checking pep8 style.
+
+::
+
+    >>> import os
+    >>> os.system("pep8 0-add_integer.py")
+    0
+
+Checking shebang at beginning of module.
+
+::
+
+    >>> os.popen('head -1 0-add_integer.py').read()
+    '#!/usr/bin/python3\n'
+
+Checking tests file relative path.
+
+::
+
+    >>> os.popen('ls tests/0-add_integer.txt').read()
+    'tests/0-add_integer.txt\n'
+
+Checking newline at end of module.
+
+::
+
+    >>> os.popen('tail -1 0-add_integer.py | cat -e').read()[-1]
+    '\n'

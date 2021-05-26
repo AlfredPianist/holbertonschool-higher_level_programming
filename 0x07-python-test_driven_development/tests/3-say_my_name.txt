@@ -1,0 +1,109 @@
+Test ``3-say_my_name.txt`` for the ``3-say_my_name`` module
+
+===========================
+ Using ``3-say_my_name``
+===========================
+
+This file tests the function ``say_my_name``.
+
+Import
+======
+
+>>> say_my_name = __import__('3-say_my_name').say_my_name
+
+Strings
+=======
+
+``say_my_name()`` prints ``My name is <first name> <last name>``
+
+::
+
+    >>> say_my_name("John", "Doe")
+    My name is John Doe
+
+    >>> say_my_name("Jane")
+    My name is Jane 
+
+    >>> say_my_name("", "Klein")
+    My name is  Klein
+
+    >>> say_my_name("")
+    My name is  
+
+Checking first_name and last_name argument exceptions.
+
+::
+
+    >>> say_my_name(None, "Doe")
+    Traceback (most recent call last):
+        ...
+    TypeError: first_name must be a string
+
+    >>> say_my_name("Susan", [])
+    Traceback (most recent call last):
+        ...
+    TypeError: last_name must be a string
+
+    >>> say_my_name(1, "Calhoun")
+    Traceback (most recent call last):
+        ...
+    TypeError: first_name must be a string
+
+    >>> say_my_name("Jay", {'hello': "world"})
+    Traceback (most recent call last):
+        ...
+    TypeError: last_name must be a string
+
+Misc
+====
+
+Checking number of arguments.
+
+::
+
+    >>> say_my_name()
+    Traceback (most recent call last):
+        ...
+    TypeError: say_my_name() missing 1 required positional argument: 'first_name'
+
+Documentation and style
+=======================
+
+Checking if documentation exists.
+
+::
+
+    >>> len(__import__("3-say_my_name").__doc__) > 8
+    True
+
+    >>> len(__import__("3-say_my_name").say_my_name.__doc__) > 8
+    True
+
+Checking pep8 style.
+
+::
+
+    >>> import os
+    >>> os.system("pep8 3-say_my_name.py")
+    0
+
+Checking shebang at beginning of module.
+
+::
+
+    >>> os.popen('head -1 3-say_my_name.py').read()
+    '#!/usr/bin/python3\n'
+
+Checking tests file relative path.
+
+::
+
+    >>> os.popen('ls tests/3-say_my_name.txt').read()
+    'tests/3-say_my_name.txt\n'
+
+Checking newline at end of module.
+
+::
+
+    >>> os.popen('tail -1 3-say_my_name.py | cat -e').read()[-1]
+    '\n'

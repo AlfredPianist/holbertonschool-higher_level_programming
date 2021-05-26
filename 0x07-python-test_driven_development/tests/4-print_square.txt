@@ -1,0 +1,134 @@
+Test ``4-print_square.txt`` for the ``4-print_square`` module
+
+===========================
+ Using ``4-print_square``
+===========================
+
+This file tests the function ``print_square``.
+
+Import
+======
+
+>>> print_square = __import__('4-print_square').print_square
+
+Numbers
+=======
+
+``print_square()`` prints a square of size 'size' filled with the '#' character.
+
+::
+
+    >>> print_square(3)
+    ###
+    ###
+    ###
+
+    >>> print_square(10)
+    ##########
+    ##########
+    ##########
+    ##########
+    ##########
+    ##########
+    ##########
+    ##########
+    ##########
+    ##########
+
+    >>> print_square(0)
+    
+
+Checking positive integers exception.
+
+::
+
+    >>> print_square(-5)
+    Traceback (most recent call last):
+        ...
+    ValueError: size must be >= 0
+
+Non-Integers
+============
+
+The ``print_square`` function is not defined for non-integers.
+
+::
+
+    >>> print_square(15.47)
+    Traceback (most recent call last):
+        ...
+    TypeError: size must be an integer
+
+    >>> print_square(-20.27)
+    Traceback (most recent call last):
+        ...
+    TypeError: size must be an integer
+
+    >>> print_square("Hello World")
+    Traceback (most recent call last):
+        ...
+    TypeError: size must be an integer
+
+    >>> print_square(None)
+    Traceback (most recent call last):
+        ...
+    TypeError: size must be an integer
+
+    >>> print_square((1, 2, 3))
+    Traceback (most recent call last):
+        ...
+    TypeError: size must be an integer
+
+Misc
+====
+
+Checking number of arguments.
+
+::
+
+    >>> print_square()
+    Traceback (most recent call last):
+        ...
+    TypeError: print_square() missing 1 required positional argument: 'size'
+
+Documentation and style
+=======================
+
+Checking if documentation exists.
+
+::
+
+    >>> len(__import__("4-print_square").__doc__) > 8
+    True
+
+    >>> len(__import__("4-print_square").print_square.__doc__) > 8
+    True
+
+Checking pep8 style.
+
+::
+
+    >>> import os
+    >>> os.system("pep8 4-print_square.py")
+    0
+
+Checking shebang at beginning of module.
+
+::
+
+    >>> os.popen('head -1 4-print_square.py').read()
+    '#!/usr/bin/python3\n'
+
+Checking tests file relative path.
+
+::
+
+    >>> os.popen('ls tests/4-print_square.txt').read()
+    'tests/4-print_square.txt\n'
+
+Checking newline at end of module.
+
+::
+
+    >>> os.popen('tail -1 4-print_square.py | cat -e').read()[-1]
+    '\n'
