@@ -23,19 +23,6 @@ class TestMaxInteger(unittest.TestCase):
         self.assertRaises(TypeError, max_integer, None)
         self.assertRaises(TypeError, max_integer, 1234)
 
-    def test_style(self):
-        fd = os.popen('head -1 5-text_indentation.py')
-        self.assertEqual(fd.read(), '#!/usr/bin/python3\n')
-        fd.close()
-
-        fd = os.popen('ls tests/6-max_integer_test.py')
-        self.assertEqual(fd.read(), 'tests/6-max_integer_test.py\n')
-        fd.close()
-
-        fd = os.popen('tail -1 6-max_integer.py | cat -e')
-        self.assertEqual(fd.read()[-1], '\n')
-        fd.close()
-
     def test_doc(self):
         self.assertTrue(len(max_integer.__doc__) > 8)
         self.assertTrue(len(__import__('6-max_integer').__doc__) > 8)
