@@ -15,20 +15,31 @@ if __name__ == '__main__':
     try:
         for line in sys.stdin:
             line = line.split()
-            size += int(line[-1])
-            code = int(line[-2])
-            if code in codes:
-                codes[code] += 1
+
+            try:
+                size += int(line[-1])
+            except Exception:
+                pass
+
+            try:
+                code = int(line[-2])
+                if code in codes:
+                    codes[code] += 1
+            except Exception:
+                pass
             line_count += 1
+
             if (line_count % 10 == 0):
                 print("File size: {:d}".format(size))
                 for code, count in sorted(codes.items()):
                     if count != 0:
                         print("{:d}: {:d}".format(code, count))
+
         print("File size: {:d}".format(size))
         for code, count in sorted(codes.items()):
             if count != 0:
                 print("{:d}: {:d}".format(code, count))
+
     except KeyboardInterrupt:
         print("File size: {:d}".format(size))
         for code, count in sorted(codes.items()):
