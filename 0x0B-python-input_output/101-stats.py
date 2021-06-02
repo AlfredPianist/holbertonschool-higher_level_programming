@@ -19,12 +19,16 @@ if __name__ == '__main__':
             code = int(line[-2])
             if code in codes:
                 codes[code] += 1
-                line_count += 1
-                if (line_count % 10 == 0):
-                    print("File size: {:d}".format(size))
-                    for code, count in sorted(codes.items()):
-                        if count != 0:
-                            print("{:d}: {:d}".format(code, count))
+            line_count += 1
+            if (line_count % 10 == 0):
+                print("File size: {:d}".format(size))
+                for code, count in sorted(codes.items()):
+                    if count != 0:
+                        print("{:d}: {:d}".format(code, count))
+        print("File size: {:d}".format(size))
+        for code, count in sorted(codes.items()):
+            if count != 0:
+                print("{:d}: {:d}".format(code, count))
     except KeyboardInterrupt:
         print("File size: {:d}".format(size))
         for code, count in sorted(codes.items()):
