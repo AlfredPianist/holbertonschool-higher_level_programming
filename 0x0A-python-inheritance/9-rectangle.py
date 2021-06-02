@@ -1,0 +1,31 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+"""9-rectangle
+
+This module creates class `Rectangle` inherited from `BaseGeometry` with two
+private attributes width and height, the ``area`` and the __str__ methods.
+"""
+
+
+BaseGeometry = __import__('7-base_geometry').BaseGeometry
+
+
+class Rectangle(BaseGeometry):
+    """A simple Rectangle class."""
+
+    def __init__(self, width, height):
+        self.integer_validator("width", width)
+        self.integer_validator("height", height)
+        self.__width = width
+        self.__height = height
+
+    def __str__(self):
+        """Returns a description of the rectangle instance."""
+        return "[Rectangle] {:d}/{:d}".format(self.__width, self.__height)
+
+    def area(self):
+        """Calculates the area of the rectangle instance.
+        Returns:
+            int: The rectangle area.
+        """
+        return self.__width * self.__height

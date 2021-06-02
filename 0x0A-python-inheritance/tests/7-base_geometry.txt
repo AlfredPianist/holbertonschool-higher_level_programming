@@ -1,0 +1,147 @@
+Test ``7-base_geometry.txt`` for the ``7-base_geometry`` module
+
+===========================
+ Using ``7-base_geometry``
+===========================
+
+This file tests the class ``BaseGeometry``.
+
+Import
+======
+
+>>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
+>>> import os
+
+Integers
+========
+
+``BaseGeometry`` is a class with two methods: area and integer_validator.
+
+::
+
+Checking correct instantiation of class.
+
+::
+
+    >>> geom = BaseGeometry()
+    
+
+Checking correct class of ``BaseGeometry``.
+
+::
+
+  Instance is of type ``BaseGeometry``.
+    >>> type(geom) == BaseGeometry
+    True
+
+  Instance is an instance of ``BaseGeometry``
+    >>> isinstance(geom, BaseGeometry)
+    True
+
+Checking correctness of integer_validator method.
+
+::
+
+    >>> geom.integer_validator("var", 12)
+
+Checking correct error catch of integer_validator method.
+
+::
+
+  TypeError - non integer values:
+    >>> geom.integer_validator("var", "string")
+    Traceback (most recent call last):
+        ...
+    TypeError: var must be an integer
+
+    >>> geom.integer_validator("var", True)
+    Traceback (most recent call last):
+        ...
+    TypeError: var must be an integer
+
+    >>> geom.integer_validator("var", [1, 2, 3])
+    Traceback (most recent call last):
+        ...
+    TypeError: var must be an integer
+
+    >>> geom.integer_validator("var", 12.23)
+    Traceback (most recent call last):
+        ...
+    TypeError: var must be an integer
+
+  ValueError - negative integers:
+    >>> geom.integer_validator("var", 0)
+    Traceback (most recent call last):
+        ...
+    ValueError: var must be greater than 0
+
+    >>> geom.integer_validator("var", -20)
+    Traceback (most recent call last):
+        ...
+    ValueError: var must be greater than 0
+
+Checking correct error catch of area method.
+
+::
+
+    >>> geom.area()
+    Traceback (most recent call last):
+        ...
+    Exception: area() is not implemented
+
+Misc
+====
+
+Checking number of arguments.
+
+::
+
+    >>> geom.integer_validator("var")
+    Traceback (most recent call last):
+        ...
+    TypeError: integer_validator() missing 1 required positional argument: 'value'
+
+    >>> geom.integer_validator("var", 3, "string")
+    Traceback (most recent call last):
+        ...
+    TypeError: integer_validator() takes 3 positional arguments but 4 were given
+
+Documentation and style
+=======================
+
+Checking if documentation exists.
+
+::
+
+    >>> len(__import__("7-base_geometry").__doc__) > 8
+    True
+
+    >>> len(__import__("7-base_geometry").BaseGeometry.__doc__) > 8
+    True
+
+    >>> len(__import__("7-base_geometry").BaseGeometry.area.__doc__) > 8
+    True
+
+    >>> len(__import__("7-base_geometry").BaseGeometry.integer_validator.__doc__) > 8
+    True
+
+Checking shebang at beginning of module.
+
+::
+
+    >>> os.popen('head -1 7-base_geometry.py').read()
+    '#!/usr/bin/python3\n'
+
+Checking tests file relative path.
+
+::
+
+    >>> os.popen('ls tests/7-base_geometry.txt').read()
+    'tests/7-base_geometry.txt\n'
+
+Checking newline at end of module.
+
+::
+
+    >>> os.popen('tail -1 7-base_geometry.py | cat -e').read()[-1]
+    '\n'

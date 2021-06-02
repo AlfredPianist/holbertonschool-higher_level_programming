@@ -1,0 +1,168 @@
+Test ``1-my_list.txt`` for the ``1-my_list`` module
+
+===========================
+ Using ``1-my_list``
+===========================
+
+This file tests the class ``MyList``.
+
+Import
+======
+
+>>> my_list = __import__('1-my_list').MyList
+>>> import os
+
+Integers
+========
+
+``my_list`` is a class inheriting from the ``list`` base class with its own
+print_sorted method.
+
+::
+
+Checking correct instantiation of ``list`` base class.
+
+::
+
+    >>> mylist = my_list()
+    >>> mylist2 = my_list()
+    >>> mylist3 = my_list()
+    >>> mylist4 = my_list()
+    >>> mylist5 = my_list()
+
+    >>> mylist
+    []
+    >>> mylist2
+    []
+    >>> mylist3
+    []
+    >>> mylist4
+    []
+    >>> mylist5
+    []
+
+Checking correct class of ``my_list`` subclass.
+
+::
+
+  Instance is of type ``my_list``.
+    >>> type(mylist) == my_list
+    True
+
+  Instance is an instance of ``my_list``
+    >>> isinstance(mylist, my_list)
+    True
+
+  Instance is a subclass of ``list``
+    >>> issubclass(type(mylist), list)
+    True
+
+Checking correct sorting of empty list.
+
+::
+
+    >>> mylist.print_sorted()
+    []
+
+Checking correct append method to created lists.
+
+::
+
+  Positive and negative integers:
+    >>> mylist2.append(1)
+    >>> mylist2.append(20)
+    >>> mylist2.append(-2)
+    >>> mylist2
+    [1, 20, -2]
+
+  Positive integers:
+    >>> mylist3.append(88)
+    >>> mylist3.append(4)
+    >>> mylist3.append(50)
+    >>> mylist3
+    [88, 4, 50]
+
+  Repeated integers:
+    >>> mylist4.append(20)
+    >>> mylist4.append(20)
+    >>> mylist4.append(20)
+    >>> mylist4.append(2)
+    >>> mylist4.append(10)
+    >>> mylist4
+    [20, 20, 20, 2, 10]
+
+  One integer:
+    >>> mylist5.append(1)
+    >>> mylist5
+    [1]
+
+Checking correct sorting method of inherited class without modifying
+original list.
+
+::
+
+    >>> mylist2.print_sorted()
+    [-2, 1, 20]
+    >>> mylist2
+    [1, 20, -2]
+
+    >>> mylist3.print_sorted()
+    [4, 50, 88]
+    >>> mylist3
+    [88, 4, 50]
+
+    >>> mylist4.print_sorted()
+    [2, 10, 20, 20, 20]
+    >>> mylist4
+    [20, 20, 20, 2, 10]
+
+    >>> mylist5.print_sorted()
+    [1]
+    >>> mylist5
+    [1]
+
+Misc
+====
+
+Checking number of arguments.
+
+::
+
+    >>> mylist4.print_sorted([1])
+    Traceback (most recent call last):
+        ...
+    TypeError: print_sorted() takes 1 positional argument but 2 were given
+
+Documentation and style
+=======================
+
+Checking if documentation exists.
+
+::
+
+    >>> len(__import__("1-my_list").__doc__) > 8
+    True
+
+    >>> len(__import__("1-my_list").MyList.__doc__) > 8
+    True
+
+Checking shebang at beginning of module.
+
+::
+
+    >>> os.popen('head -1 1-my_list.py').read()
+    '#!/usr/bin/python3\n'
+
+Checking tests file relative path.
+
+::
+
+    >>> os.popen('ls tests/1-my_list.txt').read()
+    'tests/1-my_list.txt\n'
+
+Checking newline at end of module.
+
+::
+
+    >>> os.popen('tail -1 1-my_list.py | cat -e').read()[-1]
+    '\n'
