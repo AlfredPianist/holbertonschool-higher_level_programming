@@ -75,8 +75,12 @@ class TestSquare(TestCase):
 
     def test_raise_value_errors(self):
         """Test for correct value error output"""
-        with self.assertRaisesRegex(ValueError, "width must be > 0"):
-            Square(0)
+        w_size_error = (
+            0, -2
+        )
+        for case in w_size_error:
+            with self.assertRaisesRegex(ValueError, "width must be > 0"):
+                Square(case)
         with self.assertRaisesRegex(ValueError, "x must be >= 0"):
             Square(4, -1, 10)
         with self.assertRaisesRegex(ValueError, "y must be >= 0"):

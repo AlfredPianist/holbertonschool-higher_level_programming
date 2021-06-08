@@ -55,7 +55,7 @@ class TestBase(TestCase):
         json_str = Base.from_json_string(None)
         self.assertEqual(json_str, [])
 
-        json_str = Base.from_json_string("")
+        json_str = Base.from_json_string([])
         self.assertEqual(json_str, [])
 
     def test_json_to_file(self):

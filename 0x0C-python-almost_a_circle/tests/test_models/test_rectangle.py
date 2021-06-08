@@ -83,10 +83,18 @@ class TestRectangle(TestCase):
 
     def test_raise_value_errors(self):
         """Test for correct value error output"""
-        with self.assertRaisesRegex(ValueError, "width must be > 0"):
-            Rectangle(0, 2)
-        with self.assertRaisesRegex(ValueError, "height must be > 0"):
-            Rectangle(4, -20)
+        w_val_error = (
+            (0, 2), (-2, 2)
+        )
+        h_val_error = (
+            (2, 0), (2, -2)
+        )
+        for case in w_val_error:
+            with self.assertRaisesRegex(ValueError, "width must be > 0"):
+                Rectangle(case[0], case[1])
+        for case in h_val_error:
+            with self.assertRaisesRegex(ValueError, "height must be > 0"):
+                Rectangle(case[0], case[1])
         with self.assertRaisesRegex(ValueError, "x must be >= 0"):
             Rectangle(4, 2, -1, 10)
         with self.assertRaisesRegex(ValueError, "y must be >= 0"):
