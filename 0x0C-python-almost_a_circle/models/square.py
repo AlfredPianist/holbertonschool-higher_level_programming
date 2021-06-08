@@ -2,7 +2,9 @@
 # -*- coding:utf-8 -*-
 """square module.
 
-This is the Square class inherited from the Rectangle class, ...
+This is the Square class inherited from the Rectangle class, with private
+attributes size and x and y as offsets for printing the square, the first one
+with its getter and setter, and public methods update, and to_dictionary.
 """
 from models.rectangle import Rectangle
 
@@ -43,7 +45,11 @@ class Square(Rectangle):
             self.id, self.x, self.y, self.width)
 
     def update(self, *args, **kwargs):
-        """Updates the square instance"""
+        """Updates the rectangle instance.
+        Args:
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+        """
         if args:
             arg_order = ["id", "size", "x", "y"]
             for index, arg in enumerate(args):

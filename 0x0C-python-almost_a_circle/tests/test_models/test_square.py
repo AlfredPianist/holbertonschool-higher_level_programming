@@ -5,6 +5,9 @@ from unittest import TestCase, mock
 from io import StringIO
 from models.base import Base
 from models.square import Square
+import os
+import inspect
+import pep8
 
 
 class TestSquare(TestCase):
@@ -194,3 +197,143 @@ class TestSquare(TestCase):
 
         square_3.update(**square_2.to_dictionary())
         self.assertEqual(square_2.__dict__, square_3.__dict__)
+
+    def test_from_json_string(self):
+        """Test for correct list output of json string"""
+        square_1 = Square(1, 24, 9, 20)
+        square_1_dict = square_1.to_dictionary()
+        json_str = Base.to_json_string([square_1_dict])
+        json_str_list = Base.from_json_string(json_str)
+
+        self.assertEqual(json_str_list, [square_1_dict])
+        self.assertIsInstance(json_str_list, list)
+
+    def test_to_json_string(self):
+        """Test for correct json output of dictionary"""
+        square_1 = Square(4, 20, 10, 12)
+        square_1_dict = square_1.to_dictionary()
+        json_str = Base.to_json_string([square_1_dict])
+
+        self.assertEqual(json_str, str([square_1_dict]).replace("'", "\""))
+        self.assertIsInstance(json_str, str)
+
+    def test_create(self):
+        """Test for correct instance creation from dictionary"""
+        square_1 = Square(4, 1, 50, 4)
+        square_1_dict = square_1.to_dictionary()
+        square_2 = Square.create(**square_1_dict)
+
+        self.assertEqual(square_1.__str__(), square_2.__str__())
+        self.assertEqual(type(square_1), type(square_2))
+
+    def test_json_to_file(self):
+        """Test for correct json output to file"""
+        sq_1 = Square(1, 2, 5, 3)
+        sq_2 = Square(1, 2, 7, 9)
+        sq_list = [sq_1, sq_2]
+        sq_1_dict = sq_1.to_dictionary()
+        sq_2_dict = sq_2.to_dictionary()
+
+        Square.save_to_file(sq_list)
+
+        with os.popen('ls {}.json'.format(type(sq_1).__name__)) as ls:
+            self.assertEqual(ls.read(), 'Square.json\n')
+        with open(type(sq_1).__name__ + '.json', 'r', encoding='utf-8') as f:
+            self.assertEqual(f.read(),
+                             Square.to_json_string([sq_1_dict, sq_2_dict]))
+
+        os.remove(Square.__name__ + '.json')
+
+    def test_from_json_file(self):
+        """Test for correct instance creation from json file"""
+        square_1 = Square(1, 2, 5, 3)
+        square_2 = Square(1, 2, 7, 9)
+        originals = [square_1, square_2]
+
+        Square.save_to_file(originals)
+
+        instances = Square.load_from_file()
+
+        for original, instance in zip(instances, originals):
+            self.assertIsInstance(instance, Square)
+            self.assertEqual(instance.__str__(), original.__str__())
+        os.remove(Square.__name__ + '.json')
+
+    def test_to_file_csv(self):
+        """Test for correct output of save_to_file_csv"""
+        square_1 = Square(1, 2, 5, 3)
+        square_2 = Square(1, 2, 7, 9)
+        square_list = [square_1, square_2]
+        square_1_dict = square_1.to_dictionary()
+        square_2_dict = square_2.to_dictionary()
+        square_dicts = [square_1_dict, square_2_dict]
+
+        Square.save_to_file_csv(square_list)
+
+        with os.popen('ls {}.csv'.format(type(square_1).__name__)) as ls:
+            self.assertEqual(ls.read(), 'Square.csv\n')
+        square_fields = ["id", "size", "x", "y"]
+
+        orig_str = ",".join(square_fields) + '\n'
+        for rec in square_dicts:
+            row = ""
+            for field in square_fields:
+                row += str(rec[field]) + ','
+            orig_str += row[:-1] + '\n'
+
+        with open(type(square_1).__name__ + '.csv',
+                  'r', encoding='utf-8') as f:
+            csv_str = f.read()[:]
+
+        self.assertEqual(csv_str, orig_str)
+        os.remove(Square.__name__ + '.csv')
+
+    def test_from_csv_file(self):
+        """Test for correct instance creation from csv file"""
+        square_1 = Square(1, 2, 5, 3)
+        square_2 = Square(1, 2, 7, 9)
+        originals = [square_1, square_2]
+
+        Square.save_to_file_csv(originals)
+
+        instances = Square.load_from_file_csv()
+
+        for original, instance in zip(instances, originals):
+            self.assertIsInstance(instance, Square)
+            self.assertEqual(instance.__str__(), original.__str__())
+        os.remove(Square.__name__ + '.csv')
+
+
+class TestSquareDoc(TestCase):
+    "Tests documentation and pep8 for Square class"
+
+    @classmethod
+    def setUpClass(cls):
+        """Sets the whole functions of the class Square to be inspected for
+        correct documentation."""
+        cls.functions = inspect.getmembers(Square,
+                                           inspect.isfunction(Square))
+
+    def test_doc_module(self):
+        """Tests for docstring presence in the module and the class."""
+        from models import square
+
+        self.assertTrue(len(square.__doc__) > 0)
+        self.assertTrue(len(square.Square.__doc__) > 0)
+
+    def test_doc_fun(self):
+        """Tests for docstring presence in all functions of class."""
+        for fun in self.functions:
+            self.assertTrue(len(fun.__doc__) > 0)
+
+    def test_pep8(self):
+        """Tests pep8 style compliance of module and test files."""
+        p8 = pep8.StyleGuide(quiet=True)
+
+        res = p8.check_files(['models/square.py'])
+        self.assertEqual(res.total_errors, 0,
+                         "Found code style errors (and warnings).")
+
+        res = p8.check_files(['tests/test_models/test_square.py'])
+        self.assertEqual(res.total_errors, 0,
+                         "Found code style errors (and warnings).")

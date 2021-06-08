@@ -5,6 +5,9 @@ from unittest import TestCase, mock
 from io import StringIO
 from models.base import Base
 from models.rectangle import Rectangle
+import os
+import inspect
+import pep8
 
 
 class TestRectangle(TestCase):
@@ -212,3 +215,141 @@ class TestRectangle(TestCase):
 
         rectangle_3.update(**rectangle_2.to_dictionary())
         self.assertEqual(rectangle_2.__dict__, rectangle_3.__dict__)
+
+    def test_to_json_string(self):
+        """Test for correct json output of dictionary"""
+        rectangle_1 = Rectangle(4, 20, 10, 12, 30)
+        rectangle_1_dict = rectangle_1.to_dictionary()
+        json_str = Base.to_json_string([rectangle_1_dict])
+
+        self.assertEqual(json_str, str([rectangle_1_dict]).replace("'", "\""))
+        self.assertIsInstance(json_str, str)
+
+    def test_from_json_string(self):
+        """Test for correct list output of json string"""
+        rectangle_1 = Rectangle(4, 20, 10, 12, 30)
+        rectangle_1_dict = rectangle_1.to_dictionary()
+        json_str = Base.to_json_string([rectangle_1_dict])
+        json_str_list = Base.from_json_string(json_str)
+
+        self.assertEqual(json_str_list, [rectangle_1_dict])
+        self.assertIsInstance(json_str_list, list)
+
+    def test_create(self):
+        """Test for correct instance creation from dictionary"""
+        rectangle_1 = Rectangle(2, 4, 5, 1, 9)
+        rectangle_1_dict = rectangle_1.to_dictionary()
+        rectangle_2 = Rectangle.create(**rectangle_1_dict)
+
+        self.assertEqual(rectangle_1.__str__(), rectangle_2.__str__())
+        self.assertEqual(type(rectangle_1), type(rectangle_2))
+
+    def test_json_to_file(self):
+        """Test for correct json output to file"""
+        rc_1 = Rectangle(1, 9, 20, 30, 4)
+        rc_2 = Rectangle(2, 5, 10, 2, 9)
+        rc_list = [rc_1, rc_2]
+        rc_1_dict = rc_1.to_dictionary()
+        rc_2_dict = rc_2.to_dictionary()
+
+        Rectangle.save_to_file(rc_list)
+
+        with os.popen('ls {}.json'.format(type(rc_1).__name__)) as ls:
+            self.assertEqual(ls.read(), 'Rectangle.json\n')
+        with open(type(rc_1).__name__ + '.json', 'r', encoding='utf-8') as f:
+            self.assertEqual(f.read(),
+                             Rectangle.to_json_string([rc_1_dict, rc_2_dict]))
+        os.remove(Rectangle.__name__ + '.json')
+
+    def test_from_json_file(self):
+        """Test for correct instance creation from json file"""
+        rec_1 = Rectangle(1, 9, 20, 30, 4)
+        rec_2 = Rectangle(2, 5, 10, 2, 9)
+        originals = [rec_1, rec_2]
+
+        Rectangle.save_to_file(originals)
+
+        instances = Rectangle.load_from_file()
+
+        for original, instance in zip(instances, originals):
+            self.assertIsInstance(instance, Rectangle)
+            self.assertEqual(instance.__str__(), original.__str__())
+        os.remove(Rectangle.__name__ + '.json')
+
+    def test_to_file_csv(self):
+        """Test for correct output of save_to_file_csv"""
+        rc_1 = Rectangle(1, 9, 20, 30, 4)
+        rc_2 = Rectangle(2, 5, 10, 2, 9)
+        rc_list = [rc_1, rc_2]
+        rc_1_dict = rc_1.to_dictionary()
+        rc_2_dict = rc_2.to_dictionary()
+        rc_dicts = [rc_1_dict, rc_2_dict]
+
+        Rectangle.save_to_file_csv(rc_list)
+
+        with os.popen('ls {}.csv'.format(type(rc_1).__name__)) as ls:
+            self.assertEqual(ls.read(), 'Rectangle.csv\n')
+        rec_fields = ["id", "width", "height", "x", "y"]
+
+        orig_str = ",".join(rec_fields) + '\n'
+        for rec in rc_dicts:
+            row = ""
+            for field in rec_fields:
+                row += str(rec[field]) + ','
+            orig_str += row[:-1] + '\n'
+
+        with open(type(rc_1).__name__ + '.csv', 'r', encoding='utf-8') as f:
+            csv_str = f.read()[:]
+
+        self.assertEqual(csv_str, orig_str)
+        os.remove(Rectangle.__name__ + '.csv')
+
+    def test_from_csv_file(self):
+        """Test for correct instance creation from csv file"""
+        rec_1 = Rectangle(1, 9, 20, 30, 4)
+        rec_2 = Rectangle(2, 5, 10, 2, 9)
+        originals = [rec_1, rec_2]
+
+        Rectangle.save_to_file_csv(originals)
+
+        instances = Rectangle.load_from_file_csv()
+
+        for original, instance in zip(instances, originals):
+            self.assertIsInstance(instance, Rectangle)
+            self.assertEqual(instance.__str__(), original.__str__())
+        os.remove(Rectangle.__name__ + '.csv')
+
+
+class TestRectangleDoc(TestCase):
+    "Tests documentation and pep8 for Rectangle class"
+
+    @classmethod
+    def setUpClass(cls):
+        """Sets the whole functions of the class Rectangle to be inspected for
+        correct documentation."""
+        cls.functions = inspect.getmembers(Rectangle,
+                                           inspect.isfunction(Rectangle))
+
+    def test_doc_module(self):
+        """Tests for docstring presence in the module and the class."""
+        from models import rectangle
+
+        self.assertTrue(len(rectangle.__doc__) > 0)
+        self.assertTrue(len(rectangle.Rectangle.__doc__) > 0)
+
+    def test_doc_fun(self):
+        """Tests for docstring presence in all functions of class."""
+        for fun in self.functions:
+            self.assertTrue(len(fun.__doc__) > 0)
+
+    def test_pep8(self):
+        """Tests pep8 style compliance of module and test files."""
+        p8 = pep8.StyleGuide(quiet=True)
+
+        res = p8.check_files(['models/rectangle.py'])
+        self.assertEqual(res.total_errors, 0,
+                         "Found code style errors (and warnings).")
+
+        res = p8.check_files(['tests/test_models/test_rectangle.py'])
+        self.assertEqual(res.total_errors, 0,
+                         "Found code style errors (and warnings).")

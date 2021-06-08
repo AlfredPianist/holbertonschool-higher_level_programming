@@ -4,7 +4,8 @@
 
 This is the Rectangle class inherited from the Base class, with private
 attributes width, height and x and y as offsets for printing the rectangle,
-each with its getters and setters, and public methods area, display and update.
+each with its getters and setters, and public methods area, display, update,
+and to_dictionary.
 """
 from models.base import Base
 
@@ -129,7 +130,11 @@ class Rectangle(Base):
             print(' ' * self.x + '#' * self.width)
 
     def update(self, *args, **kwargs):
-        """Updates the rectangle instance"""
+        """Updates the rectangle instance.
+        Args:
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+        """
         if args:
             arg_order = ["id", "width", "height", "x", "y"]
             for index, arg in enumerate(args):
