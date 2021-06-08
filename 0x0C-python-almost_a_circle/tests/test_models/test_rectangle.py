@@ -72,14 +72,32 @@ class TestRectangle(TestCase):
 
     def test_raise_type_errors(self):
         """Test for correct type error output"""
-        with self.assertRaisesRegex(TypeError, "width must be an integer"):
-            Rectangle("hello", 2)
-        with self.assertRaisesRegex(TypeError, "height must be an integer"):
-            Rectangle(2, [1, 2, 3])
-        with self.assertRaisesRegex(TypeError, "x must be an integer"):
-            Rectangle(1, 2, None, 4)
-        with self.assertRaisesRegex(TypeError, "y must be an integer"):
-            Rectangle(1, 2, 3, {"world": 4})
+        w_type_error = (
+            (30.2, 1), ("3", 1), (None, 1), (True, 1)
+        )
+        h_type_error = (
+            (1, 30.2), (1, "3"), (1, None), (1, True)
+        )
+        x_type_error = (
+            (1, 2, 30.2), (1, 2, "3"), (1, 2, None), (1, 2, True)
+        )
+        y_type_error = (
+            (1, 2, 3, 30.2), (1, 2, 3, "3"), (1, 2, 3, None), (1, 2, 3, True)
+        )
+
+        for case in w_type_error:
+            with self.assertRaisesRegex(TypeError, "width must be an integer"):
+                Rectangle(case[0], case[1])
+        for case in h_type_error:
+            with self.assertRaisesRegex(TypeError,
+                                        "height must be an integer"):
+                Rectangle(case[0], case[1])
+        for case in x_type_error:
+            with self.assertRaisesRegex(TypeError, "x must be an integer"):
+                Rectangle(case[0], case[1], case[2])
+        for case in y_type_error:
+            with self.assertRaisesRegex(TypeError, "y must be an integer"):
+                Rectangle(case[0], case[1], case[2], case[3])
 
     def test_raise_value_errors(self):
         """Test for correct value error output"""
@@ -89,6 +107,7 @@ class TestRectangle(TestCase):
         h_val_error = (
             (2, 0), (2, -2)
         )
+
         for case in w_val_error:
             with self.assertRaisesRegex(ValueError, "width must be > 0"):
                 Rectangle(case[0], case[1])

@@ -66,19 +66,28 @@ class TestSquare(TestCase):
 
     def test_raise_type_errors(self):
         """Test for correct type error output"""
-        with self.assertRaisesRegex(TypeError, "width must be an integer"):
-            Square("hello")
-        with self.assertRaisesRegex(TypeError, "x must be an integer"):
-            Square(1, None, 3, 4)
-        with self.assertRaisesRegex(TypeError, "y must be an integer"):
-            Square(1, 2, {"world": 4})
+        s_type_error = (30.2, "3", None, True)
+        x_type_error = (
+            (1, 30.2), (1, "3"), (1, None), (1, True)
+        )
+        y_type_error = (
+            (1, 2, 30.2), (1, 2, "3"), (1, 2, None), (1, 2, True)
+        )
+
+        for case in s_type_error:
+            with self.assertRaisesRegex(TypeError, "width must be an integer"):
+                Square(case)
+        for case in x_type_error:
+            with self.assertRaisesRegex(TypeError, "x must be an integer"):
+                Square(case[0], case[1])
+        for case in y_type_error:
+            with self.assertRaisesRegex(TypeError, "y must be an integer"):
+                Square(case[0], case[1], case[2])
 
     def test_raise_value_errors(self):
         """Test for correct value error output"""
-        w_size_error = (
-            0, -2
-        )
-        for case in w_size_error:
+        s_size_error = (0, -2)
+        for case in s_size_error:
             with self.assertRaisesRegex(ValueError, "width must be > 0"):
                 Square(case)
         with self.assertRaisesRegex(ValueError, "x must be >= 0"):
