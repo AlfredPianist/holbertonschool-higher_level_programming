@@ -138,14 +138,25 @@ class TestRectangle(TestCase):
         rectangle_1 = Rectangle(1, 2)
         correct_output = "[Rectangle] (1) 0/0 - 1/2"
         self.assertEqual(rectangle_1.__str__(), correct_output)
-
-        rectangle_2 = Rectangle(4, 6, 2, 3, 21)
-        correct_output = "[Rectangle] (21) 2/3 - 4/6"
+        rectangle_2 = Rectangle(4, 6, 2)
+        correct_output = "[Rectangle] (2) 2/0 - 4/6"
         self.assertEqual(rectangle_2.__str__(), correct_output)
+
+        rectangle_3 = Rectangle(15, 1, 4, 1)
+        correct_output = "[Rectangle] (3) 4/1 - 15/1"
+        self.assertEqual(rectangle_3.__str__(), correct_output)
+
+        rectangle_4 = Rectangle(4, 6, 2, 3, 21)
+        correct_output = "[Rectangle] (21) 2/3 - 4/6"
+        self.assertEqual(rectangle_4.__str__(), correct_output)
 
     def test_update_args(self):
         """Test for correct update method with args"""
         rectangle_1 = Rectangle(2, 2, 2, 2, 2)
+        correct_output = "[Rectangle] (2) 2/2 - 2/2"
+        self.assertEqual(rectangle_1.__str__(), correct_output)
+
+        rectangle_1.update()
         correct_output = "[Rectangle] (2) 2/2 - 2/2"
         self.assertEqual(rectangle_1.__str__(), correct_output)
 
@@ -208,16 +219,22 @@ class TestRectangle(TestCase):
         rectangle_1 = Rectangle(2, 20)
         rectangle_1_dict = {'id': 1, 'width': 2, 'height': 20, 'x': 0, 'y': 0}
         self.assertEqual(rectangle_1.to_dictionary(), rectangle_1_dict)
+        self.assertEqual(rectangle_1.to_dictionary() is rectangle_1_dict,
+                         False)
         self.assertIsInstance(rectangle_1_dict, dict)
 
         rectangle_2 = Rectangle(30, 1, 50, 2)
         rectangle_2_dict = {'id': 2, 'width': 30, 'height': 1, 'x': 50, 'y': 2}
         self.assertEqual(rectangle_2.to_dictionary(), rectangle_2_dict)
+        self.assertEqual(rectangle_2.to_dictionary() is rectangle_2_dict,
+                         False)
         self.assertIsInstance(rectangle_2_dict, dict)
 
         rectangle_3 = Rectangle(1, 2, 24, 9, 20)
         rectangle_3_dict = {'id': 20, 'width': 1, 'height': 2, 'x': 24, 'y': 9}
         self.assertEqual(rectangle_3.to_dictionary(), rectangle_3_dict)
+        self.assertEqual(rectangle_3.to_dictionary() is rectangle_3_dict,
+                         False)
         self.assertIsInstance(rectangle_3_dict, dict)
 
         rectangle_3.update(**rectangle_2.to_dictionary())

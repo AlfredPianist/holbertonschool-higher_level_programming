@@ -139,6 +139,10 @@ class TestSquare(TestCase):
         correct_output = "[Square] (2) 2/2 - 2"
         self.assertEqual(square_1.__str__(), correct_output)
 
+        square_1.update()
+        correct_output = "[Square] (2) 2/2 - 2"
+        self.assertEqual(square_1.__str__(), correct_output)
+
         square_1.update(10)
         correct_output = "[Square] (10) 2/2 - 2"
         self.assertEqual(square_1.__str__(), correct_output)
@@ -190,16 +194,19 @@ class TestSquare(TestCase):
         square_1 = Square(2)
         square_1_dict = {'id': 1, 'size': 2, 'x': 0, 'y': 0}
         self.assertEqual(square_1.to_dictionary(), square_1_dict)
+        self.assertEqual(square_1.to_dictionary() is square_1_dict, False)
         self.assertIsInstance(square_1_dict, dict)
 
         square_2 = Square(30, 50, 2)
         square_2_dict = {'id': 2, 'size': 30, 'x': 50, 'y': 2}
         self.assertEqual(square_2.to_dictionary(), square_2_dict)
+        self.assertEqual(square_2.to_dictionary() is square_2_dict, False)
         self.assertIsInstance(square_2_dict, dict)
 
         square_3 = Square(1, 24, 9, 20)
         square_3_dict = {'id': 20, 'size': 1, 'x': 24, 'y': 9}
         self.assertEqual(square_3.to_dictionary(), square_3_dict)
+        self.assertEqual(square_3.to_dictionary() is square_3_dict, False)
         self.assertIsInstance(square_3_dict, dict)
 
         square_3.update(**square_2.to_dictionary())
