@@ -25,4 +25,13 @@ To do that, [read this article if you're using Vagrant.](https://code-maven.com/
 
 If everything's correct, it will display the following window. Note that first the rectangles are drawn and then the squares. This is done for organization sake.
 
-![draw](./img/draw.gif)
+<div align="center">
+    <p>
+        <img src="./img/draw.gif" width="300" height="300"/>
+    </p>
+</div>
+
+
+
+
+
