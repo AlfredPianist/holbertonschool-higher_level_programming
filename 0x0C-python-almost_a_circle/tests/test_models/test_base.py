@@ -15,6 +15,13 @@ class TestBase(TestCase):
         """Initialization of __nb_objects to 0 before all tests."""
         Base._Base__nb_objects = 0
 
+    def tearDown(self):
+        """Clean test files."""
+        if os.path.exists("Base.json"):
+            os.remove("Base.json")
+        if os.path.exists("Base.csv"):
+            os.remove("Base.csv")
+
     def test_instance(self):
         """Test for correct instancing of base object."""
         base_1 = Base(20)
@@ -27,11 +34,13 @@ class TestBase(TestCase):
         base_2 = Base(91)
         base_3 = Base()
         base_4 = Base(10)
+        base_5 = Base(-10)
 
         self.assertEqual(base_1.id, 1)
         self.assertEqual(base_2.id, 91)
         self.assertEqual(base_3.id, 2)
         self.assertEqual(base_4.id, 10)
+        self.assertEqual(base_5.id, -10)
 
     def test_to_json_empty(self):
         """Test for correct output of empty argument of to_json_string."""
@@ -58,7 +67,6 @@ class TestBase(TestCase):
 
         with open(Base.__name__ + '.json', 'r', encoding='utf-8') as f:
             self.assertEqual(f.read(), '[]')
-        os.remove(Base.__name__ + '.json')
 
     def test_from_json_file(self):
         """Test for correct output from non existent json file."""
@@ -66,7 +74,6 @@ class TestBase(TestCase):
 
         instances = Base.load_from_file()
         self.assertEqual(instances, [])
-        os.remove(Base.__name__ + '.json')
 
     def test_to_file_csv(self):
         """Test for correct output of empty list of save_to_file_csv."""
@@ -77,7 +84,6 @@ class TestBase(TestCase):
 
         with open(str(Base.__name__) + '.csv', 'r', encoding='utf-8') as f:
             self.assertEqual(f.read(), '')
-        os.remove(Base.__name__ + '.csv')
 
     def test_from_csv_file(self):
         """Test for correct output from non existent csv file."""
@@ -85,7 +91,6 @@ class TestBase(TestCase):
 
         instances = Base.load_from_file()
         self.assertEqual(instances, [])
-        os.remove(Base.__name__ + '.csv')
 
 
 class TestBaseDoc(TestCase):
@@ -111,7 +116,7 @@ class TestBaseDoc(TestCase):
 
     def test_pep8(self):
         """Tests pep8 style compliance of module and test files."""
-        p8 = pep8.StyleGuide(quiet=True)
+        p8 = pep8.StyleGuide(quiet=False)
 
         res = p8.check_files(['models/base.py'])
         self.assertEqual(res.total_errors, 0,

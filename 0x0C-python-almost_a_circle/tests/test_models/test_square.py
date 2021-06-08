@@ -16,6 +16,13 @@ class TestSquare(TestCase):
     def setUp(self):
         Base._Base__nb_objects = 0
 
+    def tearDown(self):
+        """Clean test files."""
+        if os.path.exists("Square.json"):
+            os.remove("Square.json")
+        if os.path.exists("Square.csv"):
+            os.remove("Square.csv")
+
     def test_instance(self):
         """Test for correct instancing and inheritance of square object."""
         square_1 = Square(10, 12)
@@ -242,8 +249,6 @@ class TestSquare(TestCase):
             self.assertEqual(f.read(),
                              Square.to_json_string([sq_1_dict, sq_2_dict]))
 
-        os.remove(Square.__name__ + '.json')
-
     def test_from_json_file(self):
         """Test for correct instance creation from json file"""
         square_1 = Square(1, 2, 5, 3)
@@ -257,7 +262,6 @@ class TestSquare(TestCase):
         for original, instance in zip(instances, originals):
             self.assertIsInstance(instance, Square)
             self.assertEqual(instance.__str__(), original.__str__())
-        os.remove(Square.__name__ + '.json')
 
     def test_to_file_csv(self):
         """Test for correct output of save_to_file_csv"""
@@ -286,7 +290,6 @@ class TestSquare(TestCase):
             csv_str = f.read()[:]
 
         self.assertEqual(csv_str, orig_str)
-        os.remove(Square.__name__ + '.csv')
 
     def test_from_csv_file(self):
         """Test for correct instance creation from csv file"""
@@ -301,7 +304,6 @@ class TestSquare(TestCase):
         for original, instance in zip(instances, originals):
             self.assertIsInstance(instance, Square)
             self.assertEqual(instance.__str__(), original.__str__())
-        os.remove(Square.__name__ + '.csv')
 
 
 class TestSquareDoc(TestCase):

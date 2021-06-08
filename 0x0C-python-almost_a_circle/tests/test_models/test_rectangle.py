@@ -16,6 +16,13 @@ class TestRectangle(TestCase):
     def setUp(self):
         Base._Base__nb_objects = 0
 
+    def tearDown(self):
+        """Clean test files."""
+        if os.path.exists("Rectangle.json"):
+            os.remove("Rectangle.json")
+        if os.path.exists("Rectangle.csv"):
+            os.remove("Rectangle.csv")
+
     def test_instance(self):
         """Test for correct instancing and inheritance of rectangle object."""
         rectangle_1 = Rectangle(10, 12)
@@ -259,7 +266,6 @@ class TestRectangle(TestCase):
         with open(type(rc_1).__name__ + '.json', 'r', encoding='utf-8') as f:
             self.assertEqual(f.read(),
                              Rectangle.to_json_string([rc_1_dict, rc_2_dict]))
-        os.remove(Rectangle.__name__ + '.json')
 
     def test_from_json_file(self):
         """Test for correct instance creation from json file"""
@@ -274,7 +280,6 @@ class TestRectangle(TestCase):
         for original, instance in zip(instances, originals):
             self.assertIsInstance(instance, Rectangle)
             self.assertEqual(instance.__str__(), original.__str__())
-        os.remove(Rectangle.__name__ + '.json')
 
     def test_to_file_csv(self):
         """Test for correct output of save_to_file_csv"""
@@ -302,7 +307,6 @@ class TestRectangle(TestCase):
             csv_str = f.read()[:]
 
         self.assertEqual(csv_str, orig_str)
-        os.remove(Rectangle.__name__ + '.csv')
 
     def test_from_csv_file(self):
         """Test for correct instance creation from csv file"""
@@ -317,7 +321,6 @@ class TestRectangle(TestCase):
         for original, instance in zip(instances, originals):
             self.assertIsInstance(instance, Rectangle)
             self.assertEqual(instance.__str__(), original.__str__())
-        os.remove(Rectangle.__name__ + '.csv')
 
 
 class TestRectangleDoc(TestCase):
