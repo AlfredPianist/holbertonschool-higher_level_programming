@@ -56,6 +56,13 @@ class TestRectangle(TestCase):
         self.assertEqual(rectangle_3.x, 33)
         self.assertEqual(rectangle_3.y, 4)
 
+    def test_if_private(self):
+        """Test direct access to private attributes"""
+        rectangle_1 = Rectangle(10, 2, 3, 6)
+        self.assertEqual(rectangle_1.x, 3)
+        with self.assertRaises(AttributeError):
+            rectangle_1.__x
+
     def test_raise_argument_errors(self):
         """Test for correct argument error output"""
         with self.assertRaises(TypeError) as exc:

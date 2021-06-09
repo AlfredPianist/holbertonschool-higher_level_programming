@@ -58,6 +58,13 @@ class TestSquare(TestCase):
         self.assertEqual(square_3.x, 1)
         self.assertEqual(square_3.y, 33)
 
+    def test_if_private(self):
+        """Test direct access to private attributes"""
+        square_1 = Square(10, 2, 3)
+        self.assertEqual(square_1.x, 2)
+        with self.assertRaises(AttributeError):
+            square_1.__x
+
     def test_raise_argument_errors(self):
         """Test for correct argument error output"""
         with self.assertRaises(TypeError) as exc:
