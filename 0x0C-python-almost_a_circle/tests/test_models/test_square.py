@@ -4,6 +4,7 @@
 from unittest import TestCase, mock
 from io import StringIO
 from models.base import Base
+from models.rectangle import Rectangle
 from models.square import Square
 import os
 import inspect
@@ -29,6 +30,7 @@ class TestSquare(TestCase):
 
         self.assertIsInstance(square_1, Square)
         self.assertTrue(issubclass(type(square_1), Base), True)
+        self.assertTrue(issubclass(type(square_1), Rectangle), True)
 
     def test_attributes(self):
         """Test for correct instance attribute assignment"""
