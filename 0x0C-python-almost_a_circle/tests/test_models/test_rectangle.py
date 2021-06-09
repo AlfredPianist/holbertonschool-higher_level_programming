@@ -139,8 +139,8 @@ class TestRectangle(TestCase):
         with self.assertRaises(TypeError) as exc:
             rectangle_1.area("Hello")
         self.assertEqual(
-            "area() takes 1 positional argument but 2 were given", str(
-                exc.exception))
+            "area() takes 1 positional argument but 2 were given",
+            str(exc.exception))
 
     def test_print_no_offset(self):
         """Test for correct rectangle printing without offset"""
