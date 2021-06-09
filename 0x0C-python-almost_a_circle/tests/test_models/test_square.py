@@ -274,6 +274,26 @@ class TestSquare(TestCase):
         self.assertEqual(square_1.__str__(), square_2.__str__())
         self.assertEqual(type(square_1), type(square_2))
 
+    def test_json_to_file_None(self):
+        """Test for correct output of None list of save_to_file."""
+        Square.save_to_file(None)
+
+        with os.popen('ls {}.json'.format(str(Square.__name__))) as ls:
+            self.assertEqual(ls.read(), 'Square.json\n')
+
+        with open(Square.__name__ + '.json', 'r', encoding='utf-8') as f:
+            self.assertEqual(f.read(), '[]')
+
+    def test_json_to_file_empty(self):
+        """Test for correct output of empty list of save_to_file."""
+        Square.save_to_file([])
+
+        with os.popen('ls {}.json'.format(str(Square.__name__))) as ls:
+            self.assertEqual(ls.read(), 'Square.json\n')
+
+        with open(Square.__name__ + '.json', 'r', encoding='utf-8') as f:
+            self.assertEqual(f.read(), '[]')
+
     def test_json_to_file(self):
         """Test for correct json output to file"""
         sq_1 = Square(1, 2, 5, 3)
@@ -303,6 +323,26 @@ class TestSquare(TestCase):
         for original, instance in zip(instances, originals):
             self.assertIsInstance(instance, Square)
             self.assertEqual(instance.__str__(), original.__str__())
+
+    def test_to_file_csv_None(self):
+        """Test for correct output of None list of save_to_file_csv."""
+        Square.save_to_file_csv(None)
+
+        with os.popen('ls {}.csv'.format(str(Square.__name__))) as ls:
+            self.assertEqual(ls.read(), 'Square.csv\n')
+
+        with open(str(Square.__name__) + '.csv', 'r', encoding='utf-8') as f:
+            self.assertEqual(f.read(), '')
+
+    def test_to_file_csv_empty(self):
+        """Test for correct output of empty list of save_to_file_csv."""
+        Square.save_to_file_csv([])
+
+        with os.popen('ls {}.csv'.format(str(Square.__name__))) as ls:
+            self.assertEqual(ls.read(), 'Square.csv\n')
+
+        with open(str(Square.__name__) + '.csv', 'r', encoding='utf-8') as f:
+            self.assertEqual(f.read(), '')
 
     def test_to_file_csv(self):
         """Test for correct output of save_to_file_csv"""

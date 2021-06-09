@@ -58,9 +58,19 @@ class TestBase(TestCase):
         json_str = Base.from_json_string([])
         self.assertEqual(json_str, [])
 
-    def test_json_to_file(self):
-        """Test for correct output of empty list of save_to_file."""
+    def test_json_to_file_None(self):
+        """Test for correct output of None list of save_to_file."""
         Base.save_to_file(None)
+
+        with os.popen('ls {}.json'.format(str(Base.__name__))) as ls:
+            self.assertEqual(ls.read(), 'Base.json\n')
+
+        with open(Base.__name__ + '.json', 'r', encoding='utf-8') as f:
+            self.assertEqual(f.read(), '[]')
+
+    def test_json_to_file_empty(self):
+        """Test for correct output of empty list of save_to_file."""
+        Base.save_to_file([])
 
         with os.popen('ls {}.json'.format(str(Base.__name__))) as ls:
             self.assertEqual(ls.read(), 'Base.json\n')
@@ -75,9 +85,19 @@ class TestBase(TestCase):
         instances = Base.load_from_file()
         self.assertEqual(instances, [])
 
-    def test_to_file_csv(self):
-        """Test for correct output of empty list of save_to_file_csv."""
+    def test_to_file_csv_None(self):
+        """Test for correct output of None list of save_to_file_csv."""
         Base.save_to_file_csv(None)
+
+        with os.popen('ls {}.csv'.format(str(Base.__name__))) as ls:
+            self.assertEqual(ls.read(), 'Base.csv\n')
+
+        with open(str(Base.__name__) + '.csv', 'r', encoding='utf-8') as f:
+            self.assertEqual(f.read(), '')
+
+    def test_to_file_csv_empty(self):
+        """Test for correct output of empty list of save_to_file_csv."""
+        Base.save_to_file_csv([])
 
         with os.popen('ls {}.csv'.format(str(Base.__name__))) as ls:
             self.assertEqual(ls.read(), 'Base.csv\n')

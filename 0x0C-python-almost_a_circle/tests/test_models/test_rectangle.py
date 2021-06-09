@@ -310,6 +310,26 @@ class TestRectangle(TestCase):
         self.assertEqual(rectangle_1.__str__(), rectangle_2.__str__())
         self.assertEqual(type(rectangle_1), type(rectangle_2))
 
+    def test_json_to_file_None(self):
+        """Test for correct output of None list of save_to_file."""
+        Rectangle.save_to_file(None)
+
+        with os.popen('ls {}.json'.format(str(Rectangle.__name__))) as ls:
+            self.assertEqual(ls.read(), 'Rectangle.json\n')
+
+        with open(Rectangle.__name__ + '.json', 'r', encoding='utf-8') as f:
+            self.assertEqual(f.read(), '[]')
+
+    def test_json_to_file_empty(self):
+        """Test for correct output of empty list of save_to_file."""
+        Rectangle.save_to_file([])
+
+        with os.popen('ls {}.json'.format(str(Rectangle.__name__))) as ls:
+            self.assertEqual(ls.read(), 'Rectangle.json\n')
+
+        with open(Rectangle.__name__ + '.json', 'r', encoding='utf-8') as f:
+            self.assertEqual(f.read(), '[]')
+
     def test_json_to_file(self):
         """Test for correct json output to file"""
         rc_1 = Rectangle(1, 9, 20, 30, 4)
@@ -339,6 +359,28 @@ class TestRectangle(TestCase):
         for original, instance in zip(instances, originals):
             self.assertIsInstance(instance, Rectangle)
             self.assertEqual(instance.__str__(), original.__str__())
+
+    def test_to_file_csv_None(self):
+        """Test for correct output of None list of save_to_file_csv."""
+        Rectangle.save_to_file_csv(None)
+
+        with os.popen('ls {}.csv'.format(str(Rectangle.__name__))) as ls:
+            self.assertEqual(ls.read(), 'Rectangle.csv\n')
+
+        with open(str(Rectangle.__name__) + '.csv',
+                  'r', encoding='utf-8') as f:
+            self.assertEqual(f.read(), '')
+
+    def test_to_file_csv_empty(self):
+        """Test for correct output of empty list of save_to_file_csv."""
+        Rectangle.save_to_file_csv([])
+
+        with os.popen('ls {}.csv'.format(str(Rectangle.__name__))) as ls:
+            self.assertEqual(ls.read(), 'Rectangle.csv\n')
+
+        with open(str(Rectangle.__name__) + '.csv',
+                  'r', encoding='utf-8') as f:
+            self.assertEqual(f.read(), '')
 
     def test_to_file_csv(self):
         """Test for correct output of save_to_file_csv"""
@@ -406,7 +448,7 @@ class TestRectangleDoc(TestCase):
 
     def test_pep8(self):
         """Tests pep8 style compliance of module and test files."""
-        p8 = pep8.StyleGuide(quiet=True)
+        p8 = pep8.StyleGuide(quiet=False)
 
         res = p8.check_files(['models/rectangle.py'])
         self.assertEqual(res.total_errors, 0,

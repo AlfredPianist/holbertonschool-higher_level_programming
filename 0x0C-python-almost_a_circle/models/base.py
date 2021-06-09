@@ -117,7 +117,7 @@ class Base():
 
         with open(cls.__name__ + ".csv", "w",
                   newline='', encoding='utf-8') as f:
-            if list_objs is not None:
+            if list_objs is not None and len(list_objs) != 0:
                 if cls.__name__ == "Rectangle":
                     write_csv = csv.DictWriter(f, fieldnames=rec_fields)
                 else:
