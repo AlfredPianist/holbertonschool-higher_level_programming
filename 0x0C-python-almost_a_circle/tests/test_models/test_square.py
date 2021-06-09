@@ -116,6 +116,12 @@ class TestSquare(TestCase):
 
         self.assertEqual(square_1.area(), 100)
 
+        with self.assertRaises(TypeError) as exc:
+            square_1.area("Hello")
+        self.assertEqual(
+            "area() takes 1 positional argument but 2 were given",
+            str(exc.exception))
+
     def test_print_no_offset(self):
         """Test for correct square printing without offset"""
         square_1 = Square(5)
