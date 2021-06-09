@@ -28,7 +28,11 @@ class TestRectangle(TestCase):
         rectangle_1 = Rectangle(10, 12)
 
         self.assertIsInstance(rectangle_1, Rectangle)
-        self.assertTrue(issubclass(type(rectangle_1), Base), True)
+        self.assertIsInstance(rectangle_1, Base)
+        self.assertTrue(issubclass(type(rectangle_1), Base))
+        self.assertTrue(issubclass(type(rectangle_1), Rectangle))
+        self.assertTrue(type(rectangle_1) == Rectangle)
+        self.assertFalse(type(rectangle_1) == Base)
 
     def test_attributes(self):
         """Test for correct instance attribute assignment"""
@@ -253,15 +257,13 @@ class TestRectangle(TestCase):
         rectangle_1 = Rectangle(2, 20)
         rectangle_1_dict = {'id': 1, 'width': 2, 'height': 20, 'x': 0, 'y': 0}
         self.assertEqual(rectangle_1.to_dictionary(), rectangle_1_dict)
-        self.assertEqual(rectangle_1.to_dictionary() is rectangle_1_dict,
-                         False)
+        self.assertFalse(rectangle_1.to_dictionary() is rectangle_1_dict)
         self.assertIsInstance(rectangle_1_dict, dict)
 
         rectangle_2 = Rectangle(30, 1, 50, 2)
         rectangle_2_dict = {'id': 2, 'width': 30, 'height': 1, 'x': 50, 'y': 2}
         self.assertEqual(rectangle_2.to_dictionary(), rectangle_2_dict)
-        self.assertEqual(rectangle_2.to_dictionary() is rectangle_2_dict,
-                         False)
+        self.assertFalse(rectangle_2.to_dictionary() is rectangle_2_dict)
         self.assertIsInstance(rectangle_2_dict, dict)
 
         rectangle_3 = Rectangle(1, 2, 24, 9, 20)
