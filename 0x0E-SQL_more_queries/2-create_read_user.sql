@@ -1,0 +1,8 @@
+-- Creates database hbtn_0d_2 and user_0d_2, sets his password
+--   and grants read privileges only on hbtn_0d_2.
+CREATE DATABASE IF NOT EXISTS hbtn_0d_2;
+CREATE USER
+       IF NOT EXISTS 'user_0d_2'@'localhost';
+ALTER USER 'user_0d_2'@'localhost'
+    IDENTIFIED BY 'user_0d_2_pwd';
+GRANT SELECT ON hbtn_0d_2.* TO 'user_0d_2'@'localhost';
