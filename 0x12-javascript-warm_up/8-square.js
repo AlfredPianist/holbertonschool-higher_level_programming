@@ -2,11 +2,11 @@
 // Prints an n * n square.
 const { argv } = require('process');
 
-const term1 = parseInt(argv[2]);
-const term2 = parseInt(argv[3]);
-
-function add(a, b) {
-  return a + b;
+const side = parseInt(argv[2]);
+if (isNaN(side)) {
+  console.log('Missing size');
+} else if (side > 0) {
+  const row = 'X';
+  const iterator = Array.apply([], Array(side));
+  iterator.forEach(() => console.log(row.repeat(side)));
 }
-
-console.log(add(term1, term2));
