@@ -1,3 +1,3 @@
 #!/usr/bin/node
-// Script that returns the addition of two numbers.
+// Script that changes a global variable's value.
 myVar = 333;

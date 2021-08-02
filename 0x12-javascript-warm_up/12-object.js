@@ -1,4 +1,5 @@
 #!/usr/bin/node
+// Script that changes the value of an object.
 const myObject = {
   type: 'object',
   value: 12
