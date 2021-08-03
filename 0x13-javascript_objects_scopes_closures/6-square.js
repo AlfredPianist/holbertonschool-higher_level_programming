@@ -1,19 +1,12 @@
 #!/usr/bin/node
-/*
-  Creation of square class inheriting from Rectangle with size and
-  method charPrint.
-*/
-const Rectangle = require('./4-rectangle');
+// Creation of square class inheriting from Square with method charPrint.
+const Square = require('./5-square');
 
-class Square extends Rectangle {
-  constructor (size) {
-    super(size, size);
-  }
-
+class Square2 extends Square {
   charPrint (c) {
-    const glyph = c === undefined ? 'X' : c;
+    const glyph = !c ? 'X' : c;
     const iterator = Array.apply([], Array(this.height));
     iterator.forEach(() => console.log(glyph.repeat(this.width)));
   }
 }
-module.exports = Square;
+module.exports = Square2;
