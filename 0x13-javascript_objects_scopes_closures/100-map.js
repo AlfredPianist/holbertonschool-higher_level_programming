@@ -1,6 +1,8 @@
 #!/usr/bin/node
-// Script that converts a number to another base.
-
+/*
+  Script that prints a new list with each value from another list multiplied by
+  its index.
+*/
 const list = require('./100-data').list;
 const newList = list.map((val, idx) => val * idx);
 
