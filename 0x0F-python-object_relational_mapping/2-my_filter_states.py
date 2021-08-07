@@ -21,7 +21,7 @@ if __name__ == "__main__":
 
         cur = db.cursor()
         cur.execute("SELECT * FROM states "
-                    "WHERE states.name='{}' ".format(query) +
+                    "WHERE BINARY states.name='{}' ".format(query) +
                     "ORDER BY states.id")
 
         rows = cur.fetchall()
