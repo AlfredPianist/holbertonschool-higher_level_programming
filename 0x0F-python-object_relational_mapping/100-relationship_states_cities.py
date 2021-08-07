@@ -13,10 +13,10 @@ if __name__ == "__main__":
     engine = create_engine('mysql+mysqldb://{}:{}@localhost:3306/{}'.
                            format(user, password, dbname), pool_pre_ping=True)
 
+    Base.metadata.create_all(engine)
+
     Session = sessionmaker(bind=engine)
     session = Session()
-
-    Base.metadata.create_all(engine)
 
     state = State(name='California')
     city = City(name='San Francisco', state=state)
