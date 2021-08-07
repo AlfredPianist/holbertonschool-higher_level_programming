@@ -1,10 +1,9 @@
 #!/usr/bin/python3
 """Script that lists all States with their City names and ids
-from database hbtn_0e_6_usa."""
+from database hbtn_0e_101_usa."""
 from sys import argv
-from model_state import State
-from model_city import City
-
+from relationship_state import State
+from relationship_city import City
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -16,8 +15,8 @@ if __name__ == "__main__":
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    for state, city in session.query(State, City).join(City).\
-            order_by(City.id).all():
-        print("{}: ({:d}) {}".format(state.name, city.id, city.name))
+    for state, city in session.query(State, City).\
+            join(City).order_by(City.id).all():
+        print("{:d}: {} -> {}".format(city.id, city.name, state.name))
 
     session.close()
