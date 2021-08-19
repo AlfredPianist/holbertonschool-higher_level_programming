@@ -1,3 +1,3 @@
 #!/bin/bash
-# Script that displays all methods accepted by the sweb server
+# Script that sends a GET request with a custom header field
 curl -sH "X-HolbertonSchool-User-Id: 98" "$1"
