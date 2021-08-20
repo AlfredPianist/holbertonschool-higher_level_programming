@@ -3,6 +3,7 @@
 
 
 def find_peak(list_of_integers):
+    """Main find_peak function"""
     if (type(list_of_integers) != list or len(list_of_integers) == 0):
         return 0
     list_len = len(list_of_integers)
@@ -10,8 +11,9 @@ def find_peak(list_of_integers):
 
 
 def find_peak_helper(int_list, low_idx, up_idx):
+    """Helper recursive function"""
     mid = up_idx // 2 \
-          if ".0" in str(up_idx / 2) else up_idx // 2 + 1
+        if ".0" in str(up_idx / 2) else up_idx // 2 + 1
     if low_idx > up_idx or len(set(int_list)) == 1:
         return max(int_list)
     elif (int_list[mid] <= int_list[mid - 1]):
