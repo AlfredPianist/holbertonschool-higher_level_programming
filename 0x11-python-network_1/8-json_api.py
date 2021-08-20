@@ -15,12 +15,12 @@ if __name__ == "__main__":
         pass
 
     response = requests.post(url, data={'q': letter})
-    response = response.json()
 
     try:
+        response = response.json()
         if (response):
             print("[{}] {}".format(response['id'], response['name']))
         else:
             print("No result")
-    except ValueError:
+    except requests.exceptions.JSONDecodeError:
         print("Not a valid JSON")
