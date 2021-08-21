@@ -15,6 +15,6 @@ if __name__ == "__main__":
     request = requests.get(url)
     request = request.json()
     for i in range(10):
-        author = request[i]['commit']['author']['name']
-        sha = request[i]['sha']
+        author = request[i].get('commit').get('author').get('name')
+        sha = request[i].get('sha')
         print("{}: {}".format(sha, author))
