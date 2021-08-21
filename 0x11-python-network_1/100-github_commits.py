@@ -1,0 +1,20 @@
+#!/usr/bin/python3
+"""Script that lists 10 commits (from the most recent to oldest) of the
+repository “rails” by the user “rails”
+"""
+
+import requests
+from sys import argv
+
+
+if __name__ == "__main__":
+    user = argv[1]
+    repo = argv[2]
+    url = "https://api.github.com/repos/{}/{}/commits".format(user, repo)
+
+    request = requests.get(url)
+    request = request.json()
+    for i in range(10):
+        author = request[i]['commit']['author']['name']
+        sha = request[i]['sha']
+        print("{}: {}".format(sha, author))
